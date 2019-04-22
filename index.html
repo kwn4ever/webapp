@@ -1,31 +1,32 @@
 <!DOCTYPE html>
 <!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
+    Created on : Apr 21, 2019, 3:13:11 PM
+    Author     : kevinng
 -->
 <html>
     <head>
-        <title>List of Things</title>
+        <title>Filter List</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script type="text/javascript" src="javascript.js"></script>
         <link rel="stylesheet" type="text/css" href="stylesheet.css">
     </head>
     <body>
-        <h2>My List of Things</h2>
-        <p id="demo"></p>
-        <p id="demo2"></p>
-        <p id="demo3"></p>
-        <p id="demo4"></p>
-        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
-        <button type="button" onclick="getData()">Change Content</button>
-        <button type="button" onclick="getData2()">Change Content2</button>
-        <button type="button" onclick="getData3()">Change Content3</button>
-        <button type="button" onclick="getData4()">Change Content4</button>
+        <h2>List of Things</h2>
+        <p id="text1"></p>
+        <p id="text2"></p>
+        <p id="text3"></p>
+        <p id="text4"></p>
+        <input type="text" id="myInput" onkeyup="filterList()" placeholder="Search for names.." title="Type in a name">
+        <button type="button" onclick="getData_xhr()">get xhr</button>
+        <button type="button" onclick="getData_fetch_dog()">fetch dog</button>
+        <button type="button" onclick="getData_fetch_user()">fetch user</button>
+        <button type="button" onclick="getData_cors_ie()">fetch CORS ie</button>
+        <button type="button" onclick="getData_cors_chrome()">fetch CORS chrome</button>
         
         <ul id="myUL">
             <!--https://uinames.com/api/?amount=10-->
+            <li><a href="#">Ada</a></li>
             <li><a href="#">Adele</a></li>
             <li><a href="#">Agnes</a></li>
 
@@ -35,7 +36,10 @@ and open the template in the editor.
             <li><a href="#">Calvin</a></li>
             <li><a href="#">Christina</a></li>
             <li><a href="#">Cindy</a></li>
+            
+            <li><a href="#">Peter</a></li>
+            <li><a href="#">Zachary</a></li>
         </ul>
-        <div>TODO write content</div>
+        <div class="doggos"></div>
     </body>
 </html>

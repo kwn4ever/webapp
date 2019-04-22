@@ -1,27 +1,29 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*var listOfObjects = [];
-var a = ["car", "bike", "scooter"];
-a.forEach(function(entry) {
-    var singleObj = {}
-    singleObj['type'] = 'vehicle';
-    singleObj['value'] = entry;
-    listOfObjects.push(singleObj);
-});
-
-console.log(listOfObjects);*/
-
-//const DOG_URL = "https://dog.ceo/api/breeds/image/random";
 /*
-const THINGS_URL = "https://uinames.com/api/?amount=10";
-  
-const promise = fetch(THINGS_URL);
-//const doggos = document.querySelector(".doggos");
+    Created on : Apr 21, 2019, 3:13:11 PM
+    Author     : kevinng
+*/
 
+function filterList() {
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("myUL");
+    li = ul.getElementsByTagName("li");
+    //li = listOfObjects;
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("a")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+}
+
+//This block of code fetching data and logging to console for experiementing
+var listOfObjects = [];
+const promise = fetch('https://uinames.com/api/?amount=10');
 promise
   .then(function(response) {
         const processingPromise = response.json();
@@ -30,8 +32,7 @@ promise
   .then(function(processedResponse) {
         const name = document.createElement("name");
         name.src = processedResponse.message;
-        name.alt = "Cute doggo";
-        //doggos.appendChild(img);
+        name.alt = "Person Name";
         name.forEach(function(entry) {
             var singleObj = {};
             singleObj['type'] = 'thing';
@@ -39,10 +40,10 @@ promise
             listOfObjects.push(singleObj);
         });
   });
-*/
-function getData() {
-    // 1. Instantiate XHR - Start 
+console.log(listOfObjects);
 
+function getData_xhr() {
+    // 1. Instantiate XHR - Start 
     var xhr; 
     if (window.XMLHttpRequest) 
         xhr = new XMLHttpRequest(); 
@@ -55,84 +56,104 @@ function getData() {
     // 2. Handle Response from Server - Start
     xhr.onreadystatechange = function () {
         if (xhr.readyState < 4)
-            document.getElementById('demo').innerHTML = "Loading...";
+            document.getElementById('text1').innerHTML = "Xhr Loading...";
         else if (xhr.readyState === 4) {
             if (xhr.status == 200 && xhr.status < 300)
             {
-                document.getElementById('demo2').innerHTML = "Responding...";
+                document.getElementById('text2').innerHTML = "Xhr Responding...";
                 var json = JSON.parse(xhr.responseText); //reponseText returns the entire JSON file and we assign it to a javascript variable "json".
-                document.getElementById('demo').innerHTML = json.collection.movie[0].title;; //get first value with "title" element
+                document.getElementById('text1').innerHTML = json.collection.movie[0].title;; //get first value with "title" element
             } 
         }
     }
     // 2. Handle Response from Server - End
     
-    document.getElementById('demo3').innerHTML = "state";
-    document.getElementById('demo4').innerHTML = xhr.readyState;
+    document.getElementById('text3').innerHTML = "xhr state: " + xhr.readyState;
+    document.getElementById('text4').innerHTML = "xhr status: " + xhr.status; 
 
     // 3. Specify your action, location and Send to the server - Start   
-    xhr.open('GET', 'https://www.ajax-tutor.com/demo/movies.json');
+    xhr.open('GET', 'https://www.ajax-tutor.com/demo/movies.json',true);
     xhr.send(null);
     // 3. Specify your action, location and Send to the server - End
+    
+    console.log(JSON.parse(xhr.responseText));
 }
 
-function getData2() {
-    const T_URL = "https://www.ajax-tutor.com/demo/movies.json";
-  
-    const promise = fetch(T_URL);
-    //const doggos = document.querySelector(".doggos");
+function getData_fetch_dog() {
+    const promise = fetch('https://dog.ceo/api/breeds/image/random');
+    const doggos = document.querySelector(".doggos");
 
     promise
       .then(function(response) {
-        document.getElementById('demo').innerHTML = "Loading...";   
+        document.getElementById('text1').innerHTML = "Fetch Loading...";   
         const processingPromise = response.json();
         return processingPromise;
       })
       .then(function(processedResponse) {
-        document.getElementById('demo').innerHTML = "Processing...";   
+        document.getElementById('text1').innerHTML = "Fetch Processing...";   
         const img = document.createElement("img");
         img.src = processedResponse.message;
-        //img.alt = "Cute doggo";
-        //doggos.appendChild(img);
+        img.alt = "Cute doggo";
+        doggos.appendChild(img);
       });
 }
 
-function myFunction() {
-    var input, filter, ul, li, a, i, txtValue;
-    input = document.getElementById("myInput");
-    filter = input.value.toUpperCase();
-    ul = document.getElementById("myUL");
-    //li = ul.getElementsByTagName("li");
-    li = listOfObjects;
-    for (i = 0; i < li.length; i++) {
-        a = li[i].getElementsByTagName("a")[0];
-        txtValue = a.textContent || a.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            li[i].style.display = "";
-        } else {
-            li[i].style.display = "none";
-        }
-    }
-}
-
-function getData3(){
+function getData_fetch_user(){
+    document.getElementById('text1').innerHTML = "Fetch user..."; 
     fetch('https://api.github.com/users')
     .then(res => res.json())//response type
     .then(data => console.log(data)); //log the data;
-
 }
 
-async function getData4(){
-    //async function getData() 
-        {
-            //await the response of the fetch call
-           let response = await fetch('https://api.github.com/users');
-            //proceed once the first promise is resolved.
-           let data = await response.json()
-            //proceed only when the second promise is resolved
-            return data;
-        }
-        //call getData function
-        getData()
-        .then(data => console.log(data));//log the data
+//This function is called by getData_cor_ie()
+function createCORSRequest(method, url){
+    var xhr = new XMLHttpRequest();
+    if ("withCredentials" in xhr){
+        xhr.open(method, url, true);
+    } else if (typeof XDomainRequest != "undefined"){
+        xhr = new XDomainRequest();
+        xhr.open(method, url);
+    } else {
+        xhr = null;
+    }
+    return xhr;
+}
+
+function getData_cors_ie(){
+    var request = createCORSRequest("get", "https://www.ajax-tutor.com/demo/movies.json");
+    if (request){
+        request.onload = function() {
+            // ...
+            if (request.readyState < 4)
+                document.getElementById('text1').innerHTML = "CORS_ie Loading...";
+            else if (request.readyState === 4) {
+                if (request.status == 200 && request.status < 300)
+                {
+                    document.getElementById('text2').innerHTML = "CORS_ie Responding...";
+                    var json = JSON.parse(xhr.responseText); //reponseText returns the entire JSON file and we assign it to a javascript variable "json".
+                    document.getElementById('text1').innerHTML = json.collection.movie[0].title;; //get first value with "title" element
+                } 
+            }
+        };
+        request.send();
+        document.getElementById('text3').innerHTML = "state: " + request.readyState;
+        document.getElementById('text4').innerHTML = "status: " + request.status; 
+    }
+}
+
+function getData_cors_chrome() {
+    Origin: https://www.ajax-tutor.com
+    //Access-Control-Allow-Origin: https://www.ajax-tutor.com
+    
+    var xhr = new XMLHttpRequest();
+    xhr.open("get", "https://www.ajax-tutor.com/demo/movies.json", true);
+    document.getElementById('text1').innerHTML = "CORS Chrome Loading...";
+    xhr.onload = function(){  //instead of onreadystatechange
+        document.getElementById('text2').innerHTML = "CORS Chrome Responding...";
+        var json = JSON.parse(xhr.responseText); //reponseText returns the entire JSON file and we assign it to a javascript variable "json".
+        document.getElementById('text1').innerHTML = json.collection.movie[0].title;; //get first value with "title" element
+    }
+    xhr.send(null);
+    document.getElementById('text3').innerHTML = "state: " + xhr.readyState;
+    document.getElementById('text4').innerHTML = "status: " + xhr.status; 
 }
