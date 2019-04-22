@@ -159,13 +159,14 @@ function getData_cors_chrome() {
 }
 
 function loadDoc() {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       document.getElementById("text1").innerHTML =
       this.responseText;
     }
   };
-  xhttp.open("GET", "ajax_info.txt", true);
-  xhttp.send();
+  //xhttp.open("GET", "https://github.com/kwn4ever/webapp/blob/master/ajax_info.txt", true);
+  xhr.open("GET", "ajax_info.txt", true);
+  xhr.send();
 }
