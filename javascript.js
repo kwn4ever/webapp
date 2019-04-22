@@ -157,3 +157,15 @@ function getData_cors_chrome() {
     document.getElementById('text3').innerHTML = "state: " + xhr.readyState;
     document.getElementById('text4').innerHTML = "status: " + xhr.status; 
 }
+
+function loadDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("text1").innerHTML =
+      this.responseText;
+    }
+  };
+  xhttp.open("GET", "ajax_info.txt", true);
+  xhttp.send();
+}
